@@ -1,4 +1,6 @@
 import express from "express";
+import { Config } from "./config";
+import logger from "./config/logger";
 
 const app = express();
 
@@ -6,7 +8,6 @@ app.get("/", (req, res) => {
   res.send("Express + TypeScript Server");
 });
 
-app.listen(5555, () => {
-  // eslint-disable-next-line no-console
-  console.log(`[server]: Server is running at http://localhost:5555`);
+app.listen(Config.PORT, () => {
+  logger.info(`Server is running at http://localhost:${Config.PORT}`);
 });
