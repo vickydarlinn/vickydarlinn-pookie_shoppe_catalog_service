@@ -18,6 +18,7 @@
     "eslint": "^9.11.0",
     "globals": "^15.9.0",
     "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
     "nodemon": "^3.1.7",
     "prettier": "3.3.3",
     "ts-node": "^10.9.2",
@@ -26,5 +27,11 @@
   },
   "dependencies": {
     "express": "^4.21.0"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "npm run lint:fix",
+      "npm run format:fix"
+    ]
   }
 }
