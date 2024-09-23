@@ -2,11 +2,6 @@ import express from "express";
 
 const app = express();
 
-function test() {
-  console.log("jiii");
-}
-
-test();
 app.get("/", (req, res) => {
   res.send("Express + TypeScript Server");
 });
