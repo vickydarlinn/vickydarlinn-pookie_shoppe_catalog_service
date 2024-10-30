@@ -1,7 +1,7 @@
-import { Config } from "./config";
-import logger from "./config/logger";
+import { Config } from "./common/config";
+import logger from "./common/config/logger";
 import app from "./app";
-import { connectDB } from "./config/connectDB";
+import { connectDB } from "./common/config/connectDB";
 
 const startServer = async () => {
   const PORT = Config.PORT;
