@@ -8,9 +8,20 @@ export class CategoryService {
     return newCategory;
   };
 
-  getAll = async () => {
-    const allCategories = await this.CategoryModel.find();
-    return allCategories;
+  getAll = async (page: number = 1, limit: number = 5) => {
+    const skip = (page - 1) * limit;
+
+    const [categories, total] = await Promise.all([
+      this.CategoryModel.find().skip(skip).limit(limit),
+      this.CategoryModel.countDocuments()
+    ]);
+
+    return {
+      data: categories,
+      total,
+      page,
+      items: categories.length
+    };
   };
   delete = async (id: string) => {
     const deletedCategory = await this.CategoryModel.findByIdAndDelete(id);

@@ -29,7 +29,17 @@ export class CategoryController {
   };
 
   getAll = async (req: Request, res: Response) => {
-    const categories = await this.categoryService.getAll();
+    const page = parseInt(req.query.page as string, 10) || 1;
+    const limit = parseInt(req.query.limit as string, 10) || 5;
+
+    // const categories = await this.categoryService.getAll();
+    // res.json(categories);
+
+    const categories = await this.categoryService.getAll(page, limit);
+    this.logger.info(`Getting categories list with pagination`, {
+      page,
+      limit
+    });
     res.json(categories);
   };
   delete = async (req: Request, res: Response, next: NextFunction) => {

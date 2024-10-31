@@ -25,20 +25,10 @@ router.post(
   asyncWrapper(categoryController.create)
 );
 
-router.get(
-  "/",
-  authenticate,
-  canAccess([Roles.ADMIN]),
-  asyncWrapper(categoryController.getAll)
-);
-router.get(
-  "/:categoryId",
-  authenticate,
-  canAccess([Roles.ADMIN]),
-  asyncWrapper(categoryController.getOne)
-);
+router.get("/", asyncWrapper(categoryController.getAll));
+router.get("/:categoryId", asyncWrapper(categoryController.getOne));
 
-router.delete("/:id", asyncWrapper(categoryController.delete));
+router.delete("/:id", authenticate, asyncWrapper(categoryController.delete));
 router.put(
   "/:categoryId",
   authenticate,
