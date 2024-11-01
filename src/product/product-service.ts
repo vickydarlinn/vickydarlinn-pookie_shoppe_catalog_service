@@ -1,6 +1,11 @@
 import { Model } from "mongoose";
 import { CreateProductDTO, Product } from "../common/types";
 
+interface Filter {
+  restaurantId?: string;
+  isPublish?: boolean;
+}
+
 export class ProductService {
   constructor(private ProductModel: Model<Product>) {}
 
@@ -16,5 +21,39 @@ export class ProductService {
       new: true, // Will return the updated document
       runValidators: true // It Ensure the update follows schema validation rules
     });
+  };
+
+  getAll = async (
+    page: number = 1,
+    limit: number = 5,
+    restaurantId?: string,
+    includeUnpublished: boolean = false
+  ) => {
+    const skip = (page - 1) * limit;
+    const filter: Filter = {};
+
+    if (restaurantId) {
+      filter.restaurantId = restaurantId;
+    }
+    if (!includeUnpublished) {
+      filter.isPublish = true;
+    }
+
+    const [products, total] = await Promise.all([
+      this.ProductModel.find(filter).skip(skip).limit(limit),
+      this.ProductModel.countDocuments(filter)
+    ]);
+
+    return {
+      data: products,
+      total,
+      page,
+      items: products.length
+    };
+  };
+
+  delete = async (id: string) => {
+    const deletedCategory = await this.ProductModel.findByIdAndDelete(id);
+    return deletedCategory;
   };
 }

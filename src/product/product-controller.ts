@@ -132,4 +132,47 @@ export class ProductController {
 
     res.json({ data: updatedProduct });
   };
+
+  getAll = async (req: Request, res: Response) => {
+    const page = parseInt(req.query.page as string, 10) || 1;
+    const limit = parseInt(req.query.limit as string, 10) || 5;
+    const restaurantId = req.query.restaurantId as string;
+    const includeUnpublished = req.query.includeUnpublished === "true";
+    const allProducts = await this.productService.getAll(
+      page,
+      limit,
+      restaurantId,
+      includeUnpublished
+    );
+    res.json(allProducts);
+  };
+
+  delete = async (req: Request, res: Response, next: NextFunction) => {
+    const { productId } = req.params;
+    const isProduct = await this.productService.getOne(productId);
+    if (!isProduct) {
+      this.logger.error(`this delete product id not found`, { productId });
+
+      return next(
+        createHttpError(404, `product with id ${productId} not found`)
+      );
+    }
+    if (req.auth!.role !== Roles.ADMIN) {
+      const managerOfRestaurant = req.auth!.restaurantId;
+      if (isProduct.restaurantId != managerOfRestaurant) {
+        return next(
+          createHttpError(
+            403,
+            "You are not allowed to delete this product in this restaurant"
+          )
+        );
+      }
+    }
+    // Call the service to delete the product by ID
+    await this.productService.delete(productId);
+
+    res
+      .status(200)
+      .json({ message: "Product deleted successfully", productId });
+  };
 }
