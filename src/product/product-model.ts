@@ -38,7 +38,7 @@ const ProductSchema = new Schema<Product>(
       required: true
     },
 
-    tenantId: {
+    restaurantId: {
       type: String,
       required: true
     },

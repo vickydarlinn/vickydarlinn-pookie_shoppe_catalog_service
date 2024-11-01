@@ -12,7 +12,11 @@ const {
   DB_URL,
   JWKS_URI,
   CLIENT_UI_DOMAIN,
-  ADMIN_UI_DOMAIN
+  ADMIN_UI_DOMAIN,
+  S3_ACCESS_KEY,
+  S3_SECRET_KEY,
+  S3_REGION,
+  S3_BUCKET
 } = process.env;
 
 export const Config = {
@@ -22,5 +26,9 @@ export const Config = {
   DB_URL,
   JWKS_URI,
   CLIENT_UI_DOMAIN,
-  ADMIN_UI_DOMAIN
+  ADMIN_UI_DOMAIN,
+  S3_ACCESS_KEY,
+  S3_SECRET_KEY,
+  S3_REGION,
+  S3_BUCKET
 };
