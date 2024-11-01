@@ -4,7 +4,7 @@ import { Request } from "express-jwt";
 import { NextFunction, Response } from "express";
 import { validationResult } from "express-validator";
 import createHttpError from "http-errors";
-import { CreateProductDTO, FileStorage, Product } from "../common/types";
+import { CreateProductDTO, FileStorage } from "../common/types";
 import { v4 as uuidv4 } from "uuid";
 import { Roles } from "../common/constants";
 
@@ -145,13 +145,7 @@ export class ProductController {
       includeUnpublished
     );
 
-    const finalProducts = allProducts.data.map((product: Product) => {
-      return {
-        ...product,
-        image: this.storage.getObjectUri(product.image)
-      };
-    });
-    res.json(finalProducts);
+    res.json(allProducts);
   };
 
   delete = async (req: Request, res: Response, next: NextFunction) => {

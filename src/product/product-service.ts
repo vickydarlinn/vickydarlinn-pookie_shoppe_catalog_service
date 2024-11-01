@@ -1,10 +1,5 @@
 import { Model } from "mongoose";
-import { CreateProductDTO, Product } from "../common/types";
-
-interface Filter {
-  restaurantId?: string;
-  isPublish?: boolean;
-}
+import { CreateProductDTO, Product, Filter } from "../common/types";
 
 export class ProductService {
   constructor(private ProductModel: Model<Product>) {}
@@ -53,7 +48,7 @@ export class ProductService {
   };
 
   delete = async (id: string) => {
-    const deletedCategory = await this.ProductModel.findByIdAndDelete(id);
-    return deletedCategory;
+    const deletedProduct = await this.ProductModel.findByIdAndDelete(id);
+    return deletedProduct;
   };
 }

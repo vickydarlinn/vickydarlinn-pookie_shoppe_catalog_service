@@ -88,3 +88,22 @@ export interface FileStorage {
   delete(filename: string): Promise<void>;
   getObjectUri(filename: string): string;
 }
+
+export interface Topping extends Document {
+  name: string;
+  price: number;
+  restaurantId: string;
+  image: string;
+}
+
+export interface ToppingDTO {
+  name: string;
+  price: number;
+  restaurantId: string;
+  image: string;
+}
+
+export interface Filter {
+  restaurantId?: string;
+  isPublish?: boolean;
+}
