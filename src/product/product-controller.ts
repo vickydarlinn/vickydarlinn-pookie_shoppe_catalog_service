@@ -183,4 +183,14 @@ export class ProductController {
       .status(200)
       .json({ message: "Product deleted successfully", productId });
   };
+
+  getOne = async (req: Request, res: Response, next: NextFunction) => {
+    const { productId } = req.params;
+    const product = await this.productService.getOne(productId);
+    if (!product) {
+      return next(createHttpError(404, "product not found"));
+    }
+    this.logger.info(`Getting product`, { id: product._id });
+    res.json(product);
+  };
 }

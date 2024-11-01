@@ -43,6 +43,8 @@ router.put(
 
 router.get("/", asyncWrapper(productController.getAll));
 
+router.get("/:productId", asyncWrapper(productController.getOne));
+
 router.delete(
   "/:productId",
   authenticate,
